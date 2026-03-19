@@ -26,6 +26,9 @@ package-dir = {"" = "src"}
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+"xr_utils.cdl" = ["grammar.lark"]
+
 [tool.pytest.ini_options]
 minversion = "7.0"
 testpaths = ["tests"]

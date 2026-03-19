@@ -1,0 +1,45 @@
+start: dataset
+
+dataset: "netcdf" NAME "{" section* "}"
+
+section: dimensions_section
+       | variables_section
+       | data_section
+
+dimensions_section: "dimensions" ":" dimension_decl*
+dimension_decl: NAME "=" dim_size ";"
+dim_size: INT        -> dim_int
+        | "UNLIMITED" -> dim_unlimited
+
+variables_section: "variables" ":" variable_stmt*
+variable_stmt: variable_decl
+             | attribute_stmt
+
+variable_decl: TYPE NAME "(" [name_list] ")" ";"
+name_list: NAME ("," NAME)*
+
+attribute_stmt: [NAME] ":" NAME "=" attr_value ";"
+attr_value: ESCAPED_STRING -> string
+          | SIGNED_NUMBER  -> number
+          | NAME           -> bare_name
+
+data_section: "data" ":" data_stmt*
+data_stmt: NAME "=" data_list ";"
+data_list: data_value ("," data_value)*
+data_value: ESCAPED_STRING -> string
+          | SIGNED_NUMBER  -> number
+          | "_"           -> fill_value
+
+TYPE: "byte" | "short" | "int" | "float" | "double" | "char"
+NAME: /[A-Za-z_][A-Za-z0-9_]*/
+INT: /[0-9]+/
+
+COMMENT_LINE: /\/\/[^\n]*/
+COMMENT_BLOCK: /\/\*(?s:.*?)\*\//
+
+%import common.ESCAPED_STRING
+%import common.SIGNED_NUMBER
+%import common.WS
+%ignore WS
+%ignore COMMENT_LINE
+%ignore COMMENT_BLOCK
