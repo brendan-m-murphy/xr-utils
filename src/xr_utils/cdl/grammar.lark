@@ -31,7 +31,7 @@ data_value: ESCAPED_STRING -> string
           | "_"           -> fill_value
 
 TYPE.2: "byte" | "short" | "int" | "float" | "double" | "char"
-NAME.1: /[A-Za-z_][A-Za-z0-9_]*/
+NAME.1: /(?!netcdf\b|dimensions\b|variables\b|data\b|UNLIMITED\b)[A-Za-z_][A-Za-z0-9_]*/
 INT: /[0-9]+/
 
 COMMENT_LINE: /\/\/[^\n]*/
