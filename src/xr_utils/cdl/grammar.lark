@@ -8,7 +8,7 @@ section: dimensions_section
 
 dimensions_section: "dimensions" ":" dimension_decl*
 dimension_decl: NAME "=" dim_size ";"
-dim_size: INT        -> dim_int
+dim_size: INT         -> dim_int
         | "UNLIMITED" -> dim_unlimited
 
 variables_section: "variables" ":" variable_stmt*
@@ -30,8 +30,8 @@ data_value: ESCAPED_STRING -> string
           | SIGNED_NUMBER  -> number
           | "_"           -> fill_value
 
-TYPE: "byte" | "short" | "int" | "float" | "double" | "char"
-NAME: /[A-Za-z_][A-Za-z0-9_]*/
+TYPE.2: "byte" | "short" | "int" | "float" | "double" | "char"
+NAME.1: /[A-Za-z_][A-Za-z0-9_]*/
 INT: /[0-9]+/
 
 COMMENT_LINE: /\/\/[^\n]*/
